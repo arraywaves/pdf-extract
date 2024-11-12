@@ -20,31 +20,35 @@ struct PDFImageExtractor:
         _ = self.os_module.makedirs(output_dir, exist_ok=True)
 
     fn extract_images(self, pdf_path: String) raises -> Int:
-        var start_time = now()
-        var pdf = self.pdfplumber.open(pdf_path)
-        var image_count: Int = 0
+            var start_time = now()
+            var pdf = self.pdfplumber.open(pdf_path)
+            var image_count: Int = 0
+            var total_pages = len(pdf.pages)
 
-        for page_num in range(len(pdf.pages)):
-            var page = pdf.pages[page_num]
-            var images = page.images
+            print("\nExtracting images from PDF...")
 
-            for i in range(len(images)):
-                var image = images[i]
-                var filename = "page" + str(page_num + 1) + "_img" + str(i + 1) + ".png"
-                var image_path = self.os_module.path.join(self.output_dir, filename)
+            for page_num in range(total_pages):
+                print("\rProcessing page", page_num + 1, "of", total_pages, "...", end="")
+                var page = pdf.pages[page_num]
+                var images = page.images
 
-                # Use Python's built-in open
-                var f = self.builtins.open(image_path, "wb")
-                _ = f.write(image["stream"].get_data())
-                _ = f.close()
+                for i in range(len(images)):
+                    var image = images[i]
+                    var filename = "page" + str(page_num + 1) + "_img" + str(i + 1) + ".png"
+                    var image_path = self.os_module.path.join(self.output_dir, filename)
 
-                _ = self.extracted_paths.append(image_path)
-                image_count += 1
+                    var f = self.builtins.open(image_path, "wb")
+                    _ = f.write(image["stream"].get_data())
+                    _ = f.close()
 
-        _ = pdf.close()
-        var end_time = now()
-        print("Extraction completed in", end_time - start_time, "seconds")
-        return image_count
+                    _ = self.extracted_paths.append(image_path)
+                    image_count += 1
+
+            print("\rExtraction complete!                    ")  # Extra spaces to clear the line
+            _ = pdf.close()
+            var end_time = now()
+            print("Extraction completed in", end_time - start_time, "seconds")
+            return image_count
 
     fn print_extracted_files(self) raises:
         print("\nExtracted files:")
@@ -66,19 +70,23 @@ struct PDFPageToImageConverter:
         # Create output directory
         _ = self.os_module.makedirs(output_dir, exist_ok=True)
 
-    fn convert_images(self, pdf_path: String) raises -> Int:
+    fn convert_pages(self, pdf_path: String) raises -> Int:
         var start_time = now()
+        print("\nConverting PDF pages to images...")
 
         # Convert PDF pages to images
         var images = self.pdf2image.convert_from_path(pdf_path)
+        var total_images = len(images)
         var image_count: Int = 0
 
-        for i in range(len(images)):
+        for i in range(total_images):
+            print("\rConverting page", i + 1, "of", total_images, "...", end="")
             var image_path = self.os_module.path.join(self.output_dir, "page_" + str(i+1) + ".png")
             _ = images[i].save(image_path)
             _ = self.converted_paths.append(image_path)
             image_count += 1
 
+        print("\rConversion complete!                    ")  # Extra spaces to clear the line
         var end_time = now()
         print("Conversion completed in", end_time - start_time, "seconds")
         return image_count
