@@ -1,6 +1,6 @@
 from python import Python
 from time import now
-from extractor.extract import PDFImageExtractor, PDFPageToImageConverter
+from extractor.extract import PDFImageExtractor, PDFPageToImageConverter, PDFTextExtractor
 
 fn main() raises:
     try:
@@ -18,16 +18,22 @@ fn main() raises:
 
         print("Processing:", pdf_path)
 
-        var extractor = PDFImageExtractor()
-        var converter = PDFPageToImageConverter()
-        var extract_count = extractor.extract_images(pdf_path)
-        var convert_count = converter.convert_pages(pdf_path)
+        var image_extractor = PDFImageExtractor()
+        var page_converter = PDFPageToImageConverter()
+        var text_extractor = PDFTextExtractor()
+
+        var extract_count = image_extractor.extract_images(pdf_path)
+        var convert_count = page_converter.convert_pages(pdf_path)
+        var text_file_count = text_extractor.extract_text(pdf_path)
 
         print("\nExtracted", extract_count, "images")
-        extractor.print_extracted_files()
+        image_extractor.print_extracted_files()
 
         print("\nConverted", convert_count, "pages")
-        converter.print_converted_files()
+        page_converter.print_converted_files()
+
+        print("\nCreated", text_file_count, "text files")
+        text_extractor.print_extracted_files()
 
         print("\nProcessing complete!")
     except:

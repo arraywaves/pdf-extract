@@ -1,1 +1,1 @@
-from .extract import PDFImageExtractor, PDFPageToImageConverter
+from .extract import PDFImageExtractor, PDFPageToImageConverter, PDFTextExtractor
