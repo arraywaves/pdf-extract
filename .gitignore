@@ -1,8 +1,3 @@
-# media
-extract/**/*
-extracted_images/
-converted_images/
-
 # pixi environments
 .pixi
 *.egg-info
@@ -17,6 +12,13 @@ magic.lock
 *.mojo.cache
 .mojoc/
 *.mojo.o
+
+# media
+extract/**/*
+extracted_images/
+converted_images/
+extracted_text/
+
 
 # IDE settings
 .mojo
@@ -44,9 +46,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
