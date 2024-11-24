@@ -1,4 +1,4 @@
-# PDF Image Tool
+# PDF Extract
 Extract text, embedded images and convert pages to images from PDFs using Mojo.
 
 ## Requirements
@@ -16,10 +16,12 @@ magic add "pdf2image"
 
 ## Usage
 ```bash
-# Run the tool (converts ./extract/target.pdf)
+magic shell
+
+# Converts ./extract/target.pdf:
 mojo main.mojo
 
-# Or specify a different PDF
+# Or specify a different path:
 mojo main.mojo --pdf=/path/to/your.pdf
 ```
 
