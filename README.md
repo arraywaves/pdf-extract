@@ -1,5 +1,5 @@
 # PDF Image Tool
-Extract embedded images and convert pages to images from PDFs using Mojo.
+Extract embedded images and text, and convert pages to images from PDFs using Mojo.
 
 ## Requirements
 - Mojo
@@ -22,6 +22,12 @@ mojo main.mojo
 # Or specify a different PDF
 mojo main.mojo --pdf=/path/to/your.pdf
 ```
+
+### Magic
+If using magic:
+- `magic shell`
+- `mojo main.mojo`
+- `magic exit`
 
 ## Output
 - Extracted images will be in `extracted_images/`
