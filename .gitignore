@@ -14,7 +14,8 @@ magic.lock
 *.mojo.o
 
 # media
-extract/**/*
+extract/*
+!extract/.gitkeep
 extracted_images/
 converted_images/
 extracted_text/
